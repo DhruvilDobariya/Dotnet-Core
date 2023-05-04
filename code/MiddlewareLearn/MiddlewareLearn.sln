@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutingLearn", "RoutingLearn\RoutingLearn.csproj", "{2FF86DD2-3B67-4BE3-8EBA-697571EE33BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddlewareLearn", "MiddlewareLearn\MiddlewareLearn.csproj", "{06A29AFA-7F47-44CF-85EF-C02AAF629B36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2FF86DD2-3B67-4BE3-8EBA-697571EE33BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FF86DD2-3B67-4BE3-8EBA-697571EE33BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FF86DD2-3B67-4BE3-8EBA-697571EE33BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FF86DD2-3B67-4BE3-8EBA-697571EE33BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06A29AFA-7F47-44CF-85EF-C02AAF629B36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A29AFA-7F47-44CF-85EF-C02AAF629B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A29AFA-7F47-44CF-85EF-C02AAF629B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A29AFA-7F47-44CF-85EF-C02AAF629B36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {10BFCAFE-5B29-467A-8976-530760F0B2A6}
+		SolutionGuid = {5F671490-3FF8-4F9C-ADCB-27A7B0F55C18}
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace BasicOfFilterWithActionFilter.Filters
 {
-    public class ExampleActionFilterAttribute : Attribute, IActionFilter
+    public class ExampleActionFilterAttribute : Attribute, IActionFilter // Or we can use ActionFilterAttribute class
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {

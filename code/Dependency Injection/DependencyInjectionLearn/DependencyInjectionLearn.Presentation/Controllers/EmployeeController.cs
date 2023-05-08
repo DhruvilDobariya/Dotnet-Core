@@ -1,6 +1,5 @@
 ﻿using DependencyInjectionLearn.Domain;
 using DependencyInjectionLearn.Infrastructure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -26,7 +25,7 @@ namespace DependencyInjectionLearn.Presentation.Controllers
         public async Task<IActionResult> GetEmployee(int id)
         {
             Employee employee = await _employeeService.GetByIdAsync(id);
-            if(employee != null)
+            if (employee != null)
             {
                 return Ok(JsonSerializer.Serialize(employee));
             }

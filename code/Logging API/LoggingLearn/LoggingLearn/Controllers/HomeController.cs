@@ -2,7 +2,7 @@
 
 namespace LoggingLearn.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class HomeController : ControllerBase
     {
@@ -29,5 +29,20 @@ namespace LoggingLearn.Controllers
             // Trace < Debug < Information < Warning < Error < Critical < None
             return "API run successfully";
         }
+
+        [HttpGet]
+        public string ConsoleLog()
+        {
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddFilter("Microsoft", LogLevel.Warning);
+                builder.AddFilter("Default", LogLevel.Trace);
+                builder.AddConsole();
+            });
+            ILogger<HomeController> logger = loggerFactory.CreateLogger<HomeController>();
+            logger.LogInformation("Log Information");
+            return "ConsoleLog run successfully";
+        }
+
     }
 }

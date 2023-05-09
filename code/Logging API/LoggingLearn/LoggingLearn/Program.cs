@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Json log
+//builder.Services.AddLogging(loggingBuilder =>
+//{
+//    loggingBuilder.AddJsonConsole(options =>
+//    {
+//        options.JsonWriterOptions = new JsonWriterOptions()
+//        {
+//            Indented = true
+//        };
+//    });
+//});
+
+// add NReco provider for file log
 builder.Services.AddLogging(loggingBuilder => {
-    var loggingSection = builder.Configuration.GetSection("Logging");
     loggingBuilder.AddFile("app.log", append: true);
 });
 var app = builder.Build();

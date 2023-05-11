@@ -1,0 +1,6 @@
+Authomapper for map model and viewmodel
+use guideline in database and project
+Middleware:
+Filter:
+ActionFilter: ModelValidation
+ExceptionFilter: Exception

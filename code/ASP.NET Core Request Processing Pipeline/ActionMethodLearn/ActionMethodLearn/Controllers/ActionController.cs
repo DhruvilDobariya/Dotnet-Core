@@ -17,6 +17,7 @@ namespace ActionMethodLearn.Controllers
         }
 
         [HttpGet]
+        [Route("api/Action/Dhruvil")]
         public IActionResult NotFound()
         {
             return NotFound("NotFound action method called");

@@ -3,10 +3,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace AddressBook.BL.Services
 {
-    public class ContactService : CRUDService<ADBD05>, IADBD05Service
+    public class BLUser : BLGeneric<ADBD06>, IBLUser
     {
         private readonly IConfiguration _configuration;
-        public ContactService(IConfiguration configuration) : base(configuration.GetConnectionString("DefaultConnection"), "ADBD05", "D05F01")
+        public BLUser(IConfiguration configuration) : base(configuration.GetConnectionString("DefaultConnection"), "ADBD06", "D06F01")
         {
             _configuration = configuration;
         }

@@ -2,7 +2,7 @@
 
 namespace AddressBook.BL
 {
-    public interface IADBD02Service : ICRUDService<ADBD02>
+    public interface IBLCountry : IBLGeneric<ADBD01>
     {
     }
 }

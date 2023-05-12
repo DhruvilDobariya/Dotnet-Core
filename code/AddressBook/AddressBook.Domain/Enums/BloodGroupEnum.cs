@@ -1,5 +1,8 @@
 ﻿namespace AddressBook.Domain.Enums
 {
+    /// <summary>
+    /// Enum of Blood group
+    /// </summary>
     public enum BloodGroupEnum
     {
         APositive = 1,

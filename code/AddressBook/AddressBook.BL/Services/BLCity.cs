@@ -3,10 +3,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace AddressBook.BL.Services
 {
-    public class CountryService : CRUDService<ADBD01>, IADBD01Service
+    public class BLCity : BLGeneric<ADBD03>, IBLCity
     {
         private readonly IConfiguration _configuration;
-        public CountryService(IConfiguration configuration) : base(configuration.GetConnectionString("DefaultConnection"), "ADBD01", "D01F01")
+        public BLCity(IConfiguration configuration) : base(configuration.GetConnectionString("DefaultConnection"), "ADBD03", "D03F01")
         {
             _configuration = configuration;
         }

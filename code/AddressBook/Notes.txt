@@ -5,3 +5,5 @@ Cache header
 Filter:
 ActionFilter: ModelValidation
 ExceptionFilter: Exception
+
+[ProduceType]

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BookAPI.Presentation.Filters
 {
+    /// <summary>
+    /// Validate model in each Post or Put request
+    /// </summary>
     public class ModelValidationFilter : Attribute, IAsyncActionFilter
     {
         #region Public Methods

@@ -5,13 +5,23 @@ using System.Text;
 
 namespace BookAPI.Presentation.Middleware
 {
+    /// <summary>
+    /// Authenticate Jwt token
+    /// </summary>
     public class CustomAuthentication : IMiddleware
     {
+        #region Private Properties
         private readonly IConfiguration _configuration;
+        #endregion
+
+        #region Constructor
         public CustomAuthentication(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+        #endregion
+
+        #region Public Methods
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             StringValues keys;
@@ -46,5 +56,6 @@ namespace BookAPI.Presentation.Middleware
             }
             await next(context);
         }
+        #endregion
     }
 }

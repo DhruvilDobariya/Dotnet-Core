@@ -7,6 +7,9 @@ using System.Text.Json.Nodes;
 
 namespace BookAPI.Presentation.Filters
 {
+    /// <summary>
+    /// Handle global level exception and log exception and it's details
+    /// </summary>
     public class CustomExceptionFilter : Attribute, IExceptionFilter
     {
         #region Private Properties

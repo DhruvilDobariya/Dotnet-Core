@@ -1,10 +1,11 @@
 using BookAPI.BL;
 using BookAPI.BL.Services;
 using BookAPI.Presentation.Filters;
+using BookAPI.Presentation.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NLog.Web;
+using NLog.Extensions.Logging;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +21,16 @@ builder.Services.AddScoped<IBLBook, BLBook>();
 builder.Services.AddScoped<IBLAuthor, BLAuthor>();
 builder.Services.AddScoped<IBLCustomer, BLCustomer>();
 builder.Services.AddScoped<IBLUser, BLUser>();
+//builder.Services.AddScoped<CustomAuthentication>();
+builder.Services.AddScoped<Performance>();
 
 builder.Services.AddHttpContextAccessor();
-builder.Host.UseNLog();
+
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddNLog();
+});
 
 builder.Services.AddMvc(options =>
 {
@@ -73,7 +81,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o =>
+})
+.AddJwtBearer(o =>
 {
     var key = Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]);
     o.SaveToken = true;
@@ -100,12 +109,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<Performance>();
 app.UseHttpsRedirection();
 
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+//app.UseMiddleware<CustomAuthentication>();
 
 app.MapControllers();
 

@@ -1,15 +1,9 @@
 ﻿using BookAPI.BL;
-using BookAPI.Domain.ViewModels;
 using BookAPI.Domain;
+using BookAPI.Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using MySqlConnector;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BookAPI.API.Controllers
 {

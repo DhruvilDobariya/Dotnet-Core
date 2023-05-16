@@ -1,0 +1,1 @@
+2023-05-16 16:43:03.3120 NLogLearn.Controllers.HomeController Log Information from get action method of home controller

@@ -27,7 +27,7 @@ namespace BookAPI.Presentation.Middleware
             StringValues keys;
             if (context.Request.Headers.TryGetValue("Authorization", out keys))
             {
-                var key = keys.FirstOrDefault();
+                var key = keys.FirstOrDefault().Split(" ")[1];
                 var secretKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
                 var validationParameter = new TokenValidationParameters()
                 {

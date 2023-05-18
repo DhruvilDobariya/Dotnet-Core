@@ -76,7 +76,7 @@ namespace BookAPI.BL.Services
                         };
 
                         var tocken = tockenHandler.CreateToken(tockenDescriptior);
-                        return new Tokens { Token = tockenHandler.WriteToken(tocken) };
+                        return new Tokens { Token = tockenHandler.WriteToken(tocken), D04F01 = user.D04F01, D04F02 = user.D04F02, D04F03 = user.D04F03 };
                     }
                     return null;
                 }

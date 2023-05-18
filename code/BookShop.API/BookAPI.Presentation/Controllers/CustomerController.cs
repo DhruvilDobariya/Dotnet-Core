@@ -40,7 +40,7 @@ namespace customerAPI.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCustomerAsync()
         {
-            return Ok(JsonSerializer.Serialize(await _customerService.GetAllAsync(_userId)));
+            return Ok(await _customerService.GetAllAsync(_userId));
         }
         #endregion
 
@@ -56,12 +56,9 @@ namespace customerAPI.Presentation.Controllers
             var customer = await _customerService.GetByIdAsync(id, _userId);
             if (customer != null)
             {
-                return Ok(JsonSerializer.Serialize(customer));
+                return Ok(customer);
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "customer not found"
-            }));
+            return NotFound(new MessageModel() { Message = "customer not found" });
         }
         #endregion
 
@@ -77,15 +74,9 @@ namespace customerAPI.Presentation.Controllers
             customer.D02F06 = _userId;
             if (await _customerService.AddAsync(customer))
             {
-                return Created("", JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "customer added successfully"
-                }));
+                return Created("", new MessageModel() { Message = "customer added successfully" });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "customer doesn't added successfully"
-            }));
+            return BadRequest(new MessageModel() { Message = "customer doesn't added successfully" });
         }
         #endregion
 
@@ -101,15 +92,9 @@ namespace customerAPI.Presentation.Controllers
             customer.D02F06 = _userId;
             if (await _customerService.UpdateAsync(customer, _userId))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "customer updated successfully"
-                }));
+                return Ok(new MessageModel() { Message = "customer updated successfully" });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "customer doesn't updated successfully"
-            }));
+            return BadRequest(new MessageModel() { Message = "customer doesn't updated successfully" });
         }
         #endregion
 
@@ -124,15 +109,9 @@ namespace customerAPI.Presentation.Controllers
         {
             if (await _customerService.DeleteAsync(id, _userId))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "customer deleted successfully"
-                }));
+                return Ok(new MessageModel() { Message = "customer deleted successfully" });
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "customer not found"
-            }));
+            return NotFound(new MessageModel() { Message = "customer not found" });
         }
         #endregion
 

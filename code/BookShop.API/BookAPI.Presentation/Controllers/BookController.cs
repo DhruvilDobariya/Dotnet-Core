@@ -58,12 +58,9 @@ namespace BookAPI.API.Controllers
             var book = await _bookService.GetByIdAsync(id, _userId);
             if (book != null)
             {
-                return Ok(JsonSerializer.Serialize(book));
+                return Ok(book);
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "book not found"
-            }));
+            return NotFound(new MessageModel() { Message = "book not found" });
         }
         #endregion
 
@@ -79,15 +76,9 @@ namespace BookAPI.API.Controllers
             book.D03F07 = _userId;
             if (await _bookService.AddAsync(book))
             {
-                return Created("", JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "book added successfully"
-                }));
+                return Created("", new MessageModel() { Message = "book added successfully" });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "book doesn't added successfully"
-            }));
+            return BadRequest(new MessageModel() { Message = "book doesn't added successfully" });
         }
         #endregion
 
@@ -103,15 +94,9 @@ namespace BookAPI.API.Controllers
             book.D03F07 = _userId;
             if (await _bookService.UpdateAsync(book, _userId))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "book updated successfully"
-                }));
+                return Ok(new MessageModel() { Message = "book updated successfully" });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "book doesn't updated successfully"
-            }));
+            return BadRequest(new MessageModel() { Message = "book doesn't updated successfully" });
         }
         #endregion
 
@@ -126,15 +111,9 @@ namespace BookAPI.API.Controllers
         {
             if (await _bookService.DeleteAsync(id, _userId))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "book deleted successfully"
-                }));
+                return Ok(new MessageModel() { Message = "book deleted successfully" });
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "book not found"
-            }));
+            return NotFound(new MessageModel() { Message = "book not found" });
         }
         #endregion
 

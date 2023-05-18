@@ -41,7 +41,7 @@ namespace BookAPI.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAuthorAsync()
         {
-            return Ok(JsonSerializer.Serialize(await _authorService.GetAllAsync(_userId)));
+            return Ok(await _authorService.GetAllAsync(_userId));
         }
         #endregion
 
@@ -57,12 +57,12 @@ namespace BookAPI.Presentation.Controllers
             var author = await _authorService.GetByIdAsync(id, _userId);
             if (author != null)
             {
-                return Ok(JsonSerializer.Serialize(author));
+                return Ok(author);
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
+            return NotFound(new MessageModel()
             {
                 Message = "author not found"
-            }));
+            });
         }
         #endregion
 
@@ -78,15 +78,15 @@ namespace BookAPI.Presentation.Controllers
             author.D01F03 = _userId;
             if (await _authorService.AddAsync(author))
             {
-                return Created("", JsonSerializer.Serialize(new MessageModel()
+                return Created("", new MessageModel()
                 {
                     Message = "author added successfully"
-                }));
+                });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
+            return BadRequest(new MessageModel()
             {
                 Message = "author doesn't added successfully"
-            }));
+            });
         }
         #endregion
 
@@ -102,15 +102,15 @@ namespace BookAPI.Presentation.Controllers
             author.D01F03 = _userId;
             if (await _authorService.UpdateAsync(author, _userId))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
+                return Ok(new MessageModel()
                 {
                     Message = "author updated successfully"
-                }));
+                });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
+            return BadRequest(new MessageModel()
             {
                 Message = "author doesn't updated successfully"
-            }));
+            });
         }
         #endregion
 
@@ -125,15 +125,15 @@ namespace BookAPI.Presentation.Controllers
         {
             if (await _authorService.DeleteAsync(id, _userId))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
+                return Ok(new MessageModel()
                 {
                     Message = "author deleted successfully"
-                }));
+                });
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
+            return NotFound(new MessageModel()
             {
                 Message = "author not found"
-            }));
+            });
         }
         #endregion
 

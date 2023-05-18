@@ -39,18 +39,18 @@ namespace BookAPI.API.Controllers
         /// <param name = "login" > login object of Login class which contains email and password of user</param>
         /// <returns>It gives JWT token</returns>
         [AllowAnonymous]
-        [HttpPost("/authenticate")]
+        [HttpPost("authenticate")]
         public async Task<IActionResult> Authenticate(Login login)
         {
             var token = await _userService.Authenticate(login);
             if (token != null)
             {
-                return Ok(JsonSerializer.Serialize(token));
+                return Ok(token);
             }
-            return Unauthorized(JsonSerializer.Serialize(new MessageModel()
+            return Unauthorized(new MessageModel()
             {
                 Message = "username or password can't match"
-            }));
+            });
         }
         #endregion
 
@@ -66,12 +66,9 @@ namespace BookAPI.API.Controllers
             var user = await _userService.GetByIdAsync(id);
             if (user != null)
             {
-                return Ok(JsonSerializer.Serialize(user));
+                return Ok(user);
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "user not found"
-            }));
+            return NotFound(new MessageModel() { Message = "user not found" });
         }
         #endregion
 
@@ -82,19 +79,14 @@ namespace BookAPI.API.Controllers
         /// <param name="user">user is object which we want to add</param>
         /// <returns>Message model which contains message that user is successfully created or not</returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AddUserAsync(BOSD04 user)
         {
             if (await _userService.AddAsync(user))
             {
-                return Created("", JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "user added successfully"
-                }));
+                return Created("", new MessageModel() { Message = "user added successfully" });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "user doesn't added successfully"
-            }));
+            return BadRequest(new MessageModel() { Message = "user doesn't added successfully" });
         }
         #endregion
 
@@ -110,15 +102,9 @@ namespace BookAPI.API.Controllers
             user.D04F01 = _userId;
             if (await _userService.UpdateAsync(user))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "user updated successfully"
-                }));
+                return Ok(new MessageModel() { Message = "user updated successfully" });
             }
-            return BadRequest(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "user doesn't updated successfully"
-            }));
+            return BadRequest(new MessageModel() { Message = "user doesn't updated successfully" });
         }
         #endregion
 
@@ -133,15 +119,9 @@ namespace BookAPI.API.Controllers
         {
             if (await _userService.DeleteAsync(id))
             {
-                return Ok(JsonSerializer.Serialize(new MessageModel()
-                {
-                    Message = "user deleted successfully"
-                }));
+                return Ok(new MessageModel() { Message = "user deleted successfully" });
             }
-            return NotFound(JsonSerializer.Serialize(new MessageModel()
-            {
-                Message = "user not found"
-            }));
+            return NotFound(new MessageModel() { Message = "user not found" });
         }
         #endregion
 

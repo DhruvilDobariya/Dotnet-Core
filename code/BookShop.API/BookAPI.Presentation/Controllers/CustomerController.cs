@@ -3,7 +3,6 @@ using BookAPI.Domain;
 using BookAPI.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace customerAPI.Presentation.Controllers
 {

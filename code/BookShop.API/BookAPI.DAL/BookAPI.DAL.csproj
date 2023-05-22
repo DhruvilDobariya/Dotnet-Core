@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookAPI.DAL\BookAPI.DAL.csproj" />
     <ProjectReference Include="..\BookAPI.Domain\BookAPI.Domain.csproj" />
   </ItemGroup>
 

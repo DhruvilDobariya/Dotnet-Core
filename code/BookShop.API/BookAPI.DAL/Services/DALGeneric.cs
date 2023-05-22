@@ -1,12 +1,12 @@
 ﻿using MySqlConnector;
 
-namespace BookAPI.BL.Services
+namespace BookAPI.DAL.Services
 {
     /// <summary>
-    /// It contains business logic and data access logic for generic crud operation
+    /// It contains data access logic for generic crud operation
     /// </summary>
-    /// <typeparam name="T">T is a class which we want to generate business logic and data access logic for CRUD operation</typeparam>
-    public class BLGeneric<T> : IBLGeneric<T> where T : class
+    /// <typeparam name="T">T is a class which we want to generate data access logic for CRUD operation</typeparam>
+    public class DALGeneric<T> : IDALGeneric<T> where T : class
     {
         #region Private Properties
         private readonly string _connectionString;
@@ -16,7 +16,7 @@ namespace BookAPI.BL.Services
         #endregion
 
         #region Constructor
-        public BLGeneric(string connectionString, string tableName, string id, string userId)
+        public DALGeneric(string connectionString, string tableName, string id, string userId)
         {
             _connectionString = connectionString;
             _tableName = tableName;
@@ -115,8 +115,8 @@ namespace BookAPI.BL.Services
         /// Add T type object in table which contains T type object recored
         /// </summary>
         /// <param name="entity">entity represent a T type object which we want to add</param>
-        /// <returns>if recored added successfully then it return true else it return false</returns>
-        public virtual async Task<bool> AddAsync(T entity)
+        /// <returns>return number of affected rows in T typed table</returns>
+        public virtual async Task<int> AddAsync(T entity)
         {
             try
             {
@@ -131,12 +131,7 @@ namespace BookAPI.BL.Services
                         command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(entity) ?? DBNull.Value);
                     }
                     await connection.OpenAsync();
-                    int result = await command.ExecuteNonQueryAsync();
-                    if (result > 0)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return await command.ExecuteNonQueryAsync();
                 }
             }
             catch
@@ -152,8 +147,8 @@ namespace BookAPI.BL.Services
         /// </summary>
         /// <param name="entity">entity represent a T type object which we want to update</param>
         /// <param name="userId">userId is reference key to user table</param>
-        /// <returns>if recored updated successfully then it return true else it return false</returns>
-        public virtual async Task<bool> UpdateAsync(T entity, int userId)
+        /// <returns>return number of affected rows in T typed table</returns>
+        public virtual async Task<int> UpdateAsync(T entity, int userId)
         {
             var propertiesWithValue = string.Join(",", typeof(T).GetProperties().Select(p => $"{p.Name} = @{p.Name}"));
             var query = $"Update {_tableName} Set {propertiesWithValue} where {_id} = @{_id} and {_userId} = @{_userId}";
@@ -167,12 +162,7 @@ namespace BookAPI.BL.Services
                         command.Parameters.AddWithValue($"@{property.Name}", property.GetValue(entity) ?? DBNull.Value);
                     }
                     await connection.OpenAsync();
-                    int result = await command.ExecuteNonQueryAsync();
-                    if (result > 0)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return await command.ExecuteNonQueryAsync();
                 }
             }
             catch
@@ -188,8 +178,8 @@ namespace BookAPI.BL.Services
         /// </summary>
         /// <param name="id">id represent a primary key of recored which we want to delete</param>
         /// <param name="userId">userId is reference key to user table</param>
-        /// <returns>if recored delete successfully then it return true else it return false</returns>
-        public virtual async Task<bool> DeleteAsync(int id, int userId)
+        /// <returns>return number of affected rows in T typed table</returns>
+        public virtual async Task<int> DeleteAsync(int id, int userId)
         {
             try
             {
@@ -200,12 +190,7 @@ namespace BookAPI.BL.Services
                     command.Parameters.AddWithValue($"@{_id}", id);
                     command.Parameters.AddWithValue($"@{_userId}", userId);
                     await connections.OpenAsync();
-                    int result = await command.ExecuteNonQueryAsync();
-                    if (result > 0)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return await command.ExecuteNonQueryAsync();
                 }
             }
             catch

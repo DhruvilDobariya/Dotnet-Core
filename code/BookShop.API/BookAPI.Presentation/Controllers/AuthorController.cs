@@ -4,7 +4,6 @@ using BookAPI.Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace BookAPI.Presentation.Controllers
 {

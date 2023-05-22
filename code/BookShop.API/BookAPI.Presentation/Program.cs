@@ -1,5 +1,7 @@
 using BookAPI.BL;
 using BookAPI.BL.Services;
+using BookAPI.DAL;
+using BookAPI.DAL.Services;
 using BookAPI.Presentation.Filters;
 using BookAPI.Presentation.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,6 +24,10 @@ builder.Services.AddScoped<IBLBook, BLBook>();
 builder.Services.AddScoped<IBLAuthor, BLAuthor>();
 builder.Services.AddScoped<IBLCustomer, BLCustomer>();
 builder.Services.AddScoped<IBLUser, BLUser>();
+builder.Services.AddScoped<IDALBook, DALBook>();
+builder.Services.AddScoped<IDALAuthor, DALAuthor>();
+builder.Services.AddScoped<IDALCustomer, DALCustomer>();
+builder.Services.AddScoped<IDALUser, DALUser>();
 //builder.Services.AddScoped<CustomAuthentication>();
 builder.Services.AddScoped<Performance>();
 

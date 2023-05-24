@@ -8,8 +8,9 @@ namespace ResultFilterLearn.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        [HttpGet]
+        [TypeFilter(typeof(CustomActionFilter))]
         [TypeFilter(typeof(CustomResultFilter))]
+        [HttpGet]
         public IActionResult Get()
         {
             Debug.WriteLine("Get Method called");

@@ -1,37 +1,30 @@
-﻿using Microsoft.Extensions.Primitives;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace BookAPI.Presentation.Middleware
 {
-    /// <summary>
-    /// Authenticate Jwt token
-    /// </summary>
     public class CustomAuthentication : IMiddleware
     {
-        #region Private Properties
         private readonly IConfiguration _configuration;
-        #endregion
-
-        #region Constructor
         public CustomAuthentication(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        #endregion
-
-        #region Public Methods
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            StringValues keys;
-            if (context.Request.Headers.TryGetValue("Authorization", out keys))
+            bool isAnonymous = context.GetEndpoint().Metadata.Any(x => x.GetType() == typeof(AllowAnonymousAttribute));
+            if (!isAnonymous)
             {
-                var key = keys.FirstOrDefault().Split(" ")[1];
-                var secretKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
+                var secretKeyBytes = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
+                var secretKey = new SymmetricSecurityKey(secretKeyBytes);
+
                 var validationParameter = new TokenValidationParameters()
                 {
-                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                    IssuerSigningKey = secretKey,
                     ValidIssuer = _configuration["JWT:Issuer"],
                     ValidAudience = _configuration["JWT:Audience"],
                     ValidateIssuer = false,
@@ -40,22 +33,30 @@ namespace BookAPI.Presentation.Middleware
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();
+
                 try
                 {
-                    SecurityToken securityToken;
-                    tokenHandler.ValidateToken(key, validationParameter, out securityToken);
+                    StringValues token;
+                    if (context.Request.Headers.TryGetValue("Authorization", out token))
+                    {
+                        SecurityToken securityToken;
+                        var claimsPrincipal = tokenHandler.ValidateToken(token.FirstOrDefault().Split(" ")[1], validationParameter, out securityToken);
+                        context.User = claimsPrincipal;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
                 catch
                 {
+                    // if token is not valid then it throw exception
                     context.Response.StatusCode = 401;
+                    await context.Response.WriteAsync("Invalid token");
+                    return;
                 }
-            }
-            else
-            {
-                context.Response.StatusCode = 401;
             }
             await next(context);
         }
-        #endregion
     }
 }
